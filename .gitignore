@@ -1,0 +1,25 @@
+@"
+# Fichiers générés par la compilation
+bin/
+obj/
+dist/
+
+# Dépendances locales de Hearthstone Deck Tracker
+lib/*.dll
+lib/*.exe
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# IntelliJ / Rider
+.idea/
+
+# Fichiers temporaires
+*.log
+*.tmp
+
+# Fichier de diagnostic local
+arborescence.txt
+"@ | Set-Content -Encoding UTF8 .gitignore
