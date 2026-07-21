@@ -12,7 +12,7 @@ I created BoardStatsPlugin as a personal challenge.
 
 I am not a professional programmer, but I have always wanted a simple way to see the total statistics of a Battlegrounds board without calculating everything manually.
 
-Raw statistics are not the most important part of every fight, but they are fun to follow and can sometimes be useful—especially near the end of a lobby. The summon counter also makes it easier to understand and compare Deathrattle, Reborn, and summon-heavy compositions.
+Raw statistics are not the most important part of every fight, but they are fun to follow and can sometimes be useful, especially near the end of a lobby. The summon counter also makes it easier to understand and compare Deathrattle, Reborn, and summon-heavy compositions.
 
 ## Features
 
