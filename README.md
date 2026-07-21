@@ -4,7 +4,7 @@ A lightweight statistics overlay for **Hearthstone Battlegrounds**, designed as 
 
 BoardStatsPlugin automatically displays the combined Attack and Health of each board. During combat, it also tracks how many minions are summoned or brought back through **Reborn**.
 
-![BoardStatsPlugin preview](docs/boardstats-preview.png)
+![BoardStatsPlugin preview](images/Capture d’écran 2026-07-21 173214.png)(images/Capture d’écran 2026-07-21 174744.png)
 
 ## About the Project
 
@@ -109,4 +109,4 @@ Hearthstone and Hearthstone Battlegrounds are trademarks or registered trademark
 
 ## License
 
-See the [`LICENSE`](LICENSE) file for more information.
+This project is licensed under the MIT License. See the [`LICENSE`](https://github.com/Reign-in-blood/HDT-BoardStatsPlugin/blob/main/LICENSE) file for details.
