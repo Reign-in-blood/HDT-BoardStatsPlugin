@@ -2,184 +2,110 @@
 
 A lightweight statistics overlay for **Hearthstone Battlegrounds**, designed as a plugin for **Hearthstone Deck Tracker**.
 
-BoardStatsPlugin automatically calculates and displays the combined statistics of the minions on each board, making it easy to see the total Attack and Health at a glance during both the Recruitment and Combat phases.
+BoardStatsPlugin automatically displays the combined Attack and Health of each board. During combat, it also tracks how many minions are summoned or brought back through **Reborn**.
 
-> Add a screenshot or GIF here
-> `![BoardStatsPlugin preview](docs/boardstats-preview.png)`
+![BoardStatsPlugin preview](docs/boardstats-preview.png)
 
 ## About the Project
 
 I created BoardStatsPlugin as a personal challenge.
 
-I am not a professional programmer, but I have always wanted a simple way to count the total statistics of a Battlegrounds board without having to calculate everything manually.
+I am not a professional programmer, but I have always wanted a simple way to see the total statistics of a Battlegrounds board without calculating everything manually.
 
-Knowing the exact total Attack and Health of a board is obviously not essential in every game. Most of the time, it is simply fun information to have.
-
-However, it can also become useful in certain situations, especially when approaching the final stages of a lobby. It can help players compare board strength, follow how quickly a composition is scaling, and better understand the difference between two opponents.
-
-The main goal of this plugin is therefore simple:
-
-**Make Battlegrounds board statistics easier to read, more visual, and more entertaining.**
+Raw statistics are not the most important part of every fight, but they are fun to follow and can sometimes be useful—especially near the end of a lobby. The summon counter also makes it easier to understand and compare Deathrattle, Reborn, and summon-heavy compositions.
 
 ## Features
 
-* Displays the total Attack of the minions on the board.
-* Displays the total Health of the minions on the board.
-* Calculates statistics automatically.
-* Works during the Recruitment phase.
-* Works during Battlegrounds combat.
+* Displays the total Attack and Health of all minions on each board.
+* Automatically updates board statistics.
+* Works during both the Recruitment and Combat phases.
 * Displays statistics for both the player and the opponent when available.
+* Counts minions summoned during combat.
+* Counts minions brought back through Reborn.
+* Keeps the previous combat totals available for comparison.
 * Integrates directly into the Hearthstone Deck Tracker overlay.
-* Designed specifically for Hearthstone Battlegrounds.
-* Lightweight and easy to use.
+* Lightweight and designed specifically for Battlegrounds.
 
 ## Why Use BoardStatsPlugin?
 
-BoardStatsPlugin is not intended to replace strategy, combat simulations, or game knowledge.
-
-Instead, it provides an additional visual indicator that can be interesting and useful during a game.
-
-For example, it can help you:
+BoardStatsPlugin provides additional visual information during a game. It can help you:
 
 * Compare your board with an opponent’s board.
 * Follow the growth of a scaling composition.
 * Quickly estimate the overall size of a board.
-* Notice large statistical differences during late-game fights.
-* Keep track of impressive or unusual Battlegrounds boards.
-* Avoid manually adding together every minion’s statistics.
+* Compare late-game fights.
+* See how many additional minions were generated during combat.
+* Measure the impact of Deathrattles, Reborn effects, and summon-based compositions.
+* Keep track of impressive or unusual boards.
 
-The total statistics do not tell the complete story of a fight. Minion effects, Divine Shields, Cleave, Venomous, Reborn, Deathrattles and attack order can all be more important than raw numbers.
+Total Attack and Health do not tell the complete story of a fight. Divine Shield, Cleave, Venomous, Reborn, Deathrattles, minion effects, and attack order can all matter more than raw numbers.
 
-The plugin should therefore be viewed as an informative and entertaining tool rather than a prediction system.
+BoardStatsPlugin is therefore an informative and entertaining tool, not a combat prediction system.
 
 ## For Twitch and YouTube Creators
 
-BoardStatsPlugin can also be useful for Twitch streamers, YouTube creators and other Battlegrounds content creators.
+BoardStatsPlugin can also provide useful visual information for Twitch streams and YouTube videos.
 
-Because the total statistics are displayed directly on the screen, viewers can immediately understand the general size and power of each board.
-
-This can create additional entertainment during a stream or video, particularly when:
+Viewers can immediately compare the size of both boards and see how many minions are generated during a fight. This can encourage discussions and predictions, especially when:
 
 * Two very large boards fight each other.
-* A composition gains a huge amount of statistics in a single turn.
-* A player reaches the final stages of a lobby.
-* Viewers try to predict which board will win.
-* A statistically weaker board wins because of its effects or attack order.
-* The audience compares different scaling strategies.
+* A composition gains a large amount of stats in one turn.
+* Deathrattle or Reborn compositions generate many additional minions.
+* Players approach the final stages of a lobby.
+* Viewers try to predict the result of the next fight.
+* A statistically weaker board wins through effects or attack order.
 
-The visible totals can encourage viewers to discuss the fight, make predictions and react to unusual results.
-
-This can help create conversations in chat and add another visual element to Battlegrounds content.
+These visible statistics can create additional entertainment and give viewers more information to discuss during a stream.
 
 ## Installation
 
-1. Go to the [latest release page](REPLACE_WITH_YOUR_RELEASE_LINK).
-
-2. Download `BoardStatsPlugin.dll` or the provided ZIP file.
-
+1. Go to the [latest release page](https://github.com/Reign-in-blood/HDT-BoardStatsPlugin/releases/tag/v0.2.8).
+2. Download `BoardStatsPlugin.dll`.
 3. Open Hearthstone Deck Tracker.
-
-4. Open:
+4. Go to:
 
    `Options → Tracker → Plugins`
 
-5. Drag and drop the downloaded DLL or ZIP file into the plugins window.
-
+5. Drag and drop the downloaded DLL into the plugins window.
 6. Restart Hearthstone Deck Tracker if necessary.
-
-7. Make sure BoardStatsPlugin is enabled in the plugin list.
-
+7. Make sure BoardStatsPlugin is enabled.
 8. Launch Hearthstone and start a Battlegrounds game.
 
-Do not download the automatically generated GitHub files named `Source code`.
+Do not download the automatically generated files named **Source code**. They contain the project files, not the compiled plugin required for installation.
 
-These files contain the project’s source code and are not the compiled plugin required for installation.
-
-## Updating the Plugin
-
-To update BoardStatsPlugin:
-
-1. Download the latest version from the [Releases page](REPLACE_WITH_YOUR_RELEASE_LINK).
-2. Close Hearthstone Deck Tracker.
-3. Replace the previous plugin file with the new version.
-4. Restart Hearthstone Deck Tracker.
-
-## Compatibility
-
-* Hearthstone Battlegrounds
-* Hearthstone Deck Tracker
-* Windows
-
-Compatibility may change after updates to Hearthstone or Hearthstone Deck Tracker.
-
-Check the [Releases page](REPLACE_WITH_YOUR_RELEASE_LINK) for information about the latest tested version.
-
-## Troubleshooting
-
-### The plugin does not appear in Hearthstone Deck Tracker
-
-Make sure that:
-
-* You downloaded the DLL or ZIP from the Releases page.
-* You did not download the GitHub source code archive.
-* The plugin was added through the HDT plugins window.
-* Hearthstone Deck Tracker was restarted.
-* BoardStatsPlugin is enabled.
-
-### Windows blocks the DLL
-
-Windows may sometimes block DLL files downloaded from the Internet.
-
-To unblock the file:
-
-1. Right-click `BoardStatsPlugin.dll`.
-2. Select **Properties**.
-3. Enable **Unblock**, if the option is available.
-4. Click **Apply**.
-5. Restart Hearthstone Deck Tracker.
-
-### The displayed statistics are incorrect
-
-Hearthstone Battlegrounds changes regularly, and some unusual minion effects or new mechanics may require specific handling.
-
-Please report the problem through the GitHub Issues page and include:
-
-* Your BoardStatsPlugin version.
-* Your Hearthstone Deck Tracker version.
-* A screenshot of the board.
-* The minions or effects involved.
-* A short description of the incorrect result.
+The source code is publicly available for transparency and may be inspected, used, or forked under the terms of the project license.
 
 ## Feedback and Bug Reports
 
 Feedback is welcome.
 
-As this plugin began as a personal programming challenge, reports from real players are especially useful for improving it.
+To report a bug or suggest an improvement, open a [GitHub Issue](https://github.com/Reign-in-blood/HDT-BoardStatsPlugin/issues).
 
-To report a bug or suggest an improvement, open an issue here:
+Please include your plugin version, HDT version, and a screenshot when possible.
 
-[GitHub Issues](REPLACE_WITH_YOUR_ISSUES_LINK)
+## Support the Project
 
-When reporting a bug, please provide as much information as possible.
+* Try the plugin.
+* Report bugs.
+* Suggest improvements.
+* Share it with other Battlegrounds players.
+* Use it in a Twitch stream or YouTube video.
+* Star the repository on GitHub.
+
+## To Do
+
+* Make the statistics panels movable.
+* Add customization options.
+* Improve the overall visual design.
+* Add support for traditional Hearthstone game modes.
 
 ## Disclaimer
 
 BoardStatsPlugin is an independent community project.
 
-It is not affiliated with, endorsed by, or officially supported by Blizzard Entertainment, HearthSim, HSReplay.net or Hearthstone Deck Tracker.
+It is not affiliated with, endorsed by, or officially supported by Blizzard Entertainment, HearthSim, HSReplay.net, or Hearthstone Deck Tracker.
 
 Hearthstone and Hearthstone Battlegrounds are trademarks or registered trademarks of Blizzard Entertainment, Inc.
-
-## Support the Project
-
-The best ways to support BoardStatsPlugin are:
-
-* Try the plugin.
-* Report bugs.
-* Suggest improvements.
-* Share the project with other Battlegrounds players.
-* Use it in a Twitch stream or YouTube video.
-* Star the repository on GitHub.
 
 ## License
 
