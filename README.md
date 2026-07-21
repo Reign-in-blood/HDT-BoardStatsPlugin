@@ -4,7 +4,10 @@ A lightweight statistics overlay for **Hearthstone Battlegrounds**, designed as 
 
 BoardStatsPlugin automatically displays the combined Attack and Health of each board. During combat, it also tracks how many minions are summoned or brought back through **Reborn**.
 
-![BoardStatsPlugin preview](images/Capture d’écran 2026-07-21 173214.png)(images/Capture d’écran 2026-07-21 174744.png)
+<p align="center">
+  <img src="images/Capture d’écran 2026-07-21 173214.png" alt="BoardStatsPlugin preview" width="500">
+  <img src="images/Capture d’écran 2026-07-21 174744.png" alt="BoardStatsPlugin preview" width="500">
+</p>
 
 ## About the Project
 
