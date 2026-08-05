@@ -48,7 +48,7 @@ jobs:
           $projectDir = "$env:GITHUB_WORKSPACE/DarkGiftTracker/build/HDT_DarkGiftTracker_Project"
           Push-Location $projectDir
           try {
-            git apply --unsafe-paths -p4 $patchPath
+            git apply --unsafe-paths -p5 $patchPath
           }
           finally {
             Pop-Location
