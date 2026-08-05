@@ -34,16 +34,45 @@ jobs:
           Invoke-WebRequest -Uri $url -OutFile $zipPath
           Expand-Archive -LiteralPath $zipPath -DestinationPath $extractPath -Force
 
-          $hdtExe = Get-ChildItem -Path $extractPath -Filter "HearthstoneDeckTracker.exe" -File -Recurse | Select-Object -First 1
-          if ($null -eq $hdtExe) { throw "HearthstoneDeckTracker.exe not found in release archive." }
+          $managedAssemblies = foreach ($file in Get-ChildItem -Path $extractPath -File -Recurse) {
+            if ($file.Extension -notin @('.exe', '.dll')) { continue }
+            try {
+              $assemblyName = [System.Reflection.AssemblyName]::GetAssemblyName($file.FullName)
+              [PSCustomObject]@{
+                File = $file
+                AssemblyName = $assemblyName.Name
+              }
+            }
+            catch {
+              # Ignore native executables and non-managed DLLs.
+            }
+          }
 
-          $hearthDb = Join-Path $hdtExe.Directory.FullName "HearthDb.dll"
-          if (-not (Test-Path -LiteralPath $hearthDb)) { throw "HearthDb.dll not found next to HDT assembly." }
+          $hdtAssembly = $managedAssemblies |
+            Where-Object { $_.AssemblyName -eq 'HearthstoneDeckTracker' } |
+            Select-Object -First 1
+
+          $hearthDbAssembly = $managedAssemblies |
+            Where-Object { $_.AssemblyName -eq 'HearthDb' } |
+            Select-Object -First 1
+
+          if ($null -eq $hdtAssembly) {
+            Write-Host 'Managed assemblies found:'
+            $managedAssemblies | Format-Table AssemblyName, @{Label='Path'; Expression={$_.File.FullName}} -AutoSize
+            throw 'Managed HearthstoneDeckTracker assembly not found in release archive.'
+          }
+
+          if ($null -eq $hearthDbAssembly) {
+            throw 'Managed HearthDb assembly not found in release archive.'
+          }
+
+          Write-Host "HDT assembly: $($hdtAssembly.File.FullName)"
+          Write-Host "HearthDb assembly: $($hearthDbAssembly.File.FullName)"
 
           $projectDir = "$env:GITHUB_WORKSPACE/DarkGiftTracker/build/HDT_DarkGiftTracker_Project"
           New-Item -ItemType Directory -Path "$projectDir/lib" -Force | Out-Null
-          Copy-Item -LiteralPath $hdtExe.FullName -Destination "$projectDir/lib/HearthstoneDeckTracker.exe" -Force
-          Copy-Item -LiteralPath $hearthDb -Destination "$projectDir/lib/HearthDb.dll" -Force
+          Copy-Item -LiteralPath $hdtAssembly.File.FullName -Destination "$projectDir/lib/HearthstoneDeckTracker.exe" -Force
+          Copy-Item -LiteralPath $hearthDbAssembly.File.FullName -Destination "$projectDir/lib/HearthDb.dll" -Force
 
       - name: Build plugin
         shell: pwsh
