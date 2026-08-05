@@ -1,0 +1,68 @@
+name: Build Dark Gift Tracker
+
+on:
+  push:
+    branches:
+      - darkgifttracker-build
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Decode project sources
+        shell: pwsh
+        run: |
+          $base64 = Get-Content "DarkGiftTracker/HDT_DarkGiftTracker_Source.zip.b64" -Raw
+          $zipPath = Join-Path $env:RUNNER_TEMP "HDT_DarkGiftTracker_Source.zip"
+          [System.IO.File]::WriteAllBytes($zipPath, [Convert]::FromBase64String($base64.Trim()))
+          Expand-Archive -LiteralPath $zipPath -DestinationPath "$env:GITHUB_WORKSPACE/DarkGiftTracker/build" -Force
+
+      - name: Download HDT 1.55.0 assemblies
+        shell: pwsh
+        run: |
+          $url = "https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases/download/v1.55.0/Hearthstone.Deck.Tracker-v1.55.0.zip"
+          $zipPath = Join-Path $env:RUNNER_TEMP "HDT-v1.55.0.zip"
+          $extractPath = Join-Path $env:RUNNER_TEMP "HDT-v1.55.0"
+          Invoke-WebRequest -Uri $url -OutFile $zipPath
+          Expand-Archive -LiteralPath $zipPath -DestinationPath $extractPath -Force
+
+          $hdtExe = Get-ChildItem -Path $extractPath -Filter "HearthstoneDeckTracker.exe" -File -Recurse | Select-Object -First 1
+          if ($null -eq $hdtExe) { throw "HearthstoneDeckTracker.exe not found in release archive." }
+
+          $hearthDb = Join-Path $hdtExe.Directory.FullName "HearthDb.dll"
+          if (-not (Test-Path -LiteralPath $hearthDb)) { throw "HearthDb.dll not found next to HDT assembly." }
+
+          $projectDir = "$env:GITHUB_WORKSPACE/DarkGiftTracker/build/HDT_DarkGiftTracker_Project"
+          New-Item -ItemType Directory -Path "$projectDir/lib" -Force | Out-Null
+          Copy-Item -LiteralPath $hdtExe.FullName -Destination "$projectDir/lib/HearthstoneDeckTracker.exe" -Force
+          Copy-Item -LiteralPath $hearthDb -Destination "$projectDir/lib/HearthDb.dll" -Force
+
+      - name: Build plugin
+        shell: pwsh
+        run: |
+          $project = "$env:GITHUB_WORKSPACE/DarkGiftTracker/build/HDT_DarkGiftTracker_Project/HDT_DarkGiftTracker.csproj"
+          msbuild $project /t:Restore,Build /p:Configuration=Release /p:Platform=x64 /m
+
+      - name: Prepare artifact
+        shell: pwsh
+        run: |
+          $source = "$env:GITHUB_WORKSPACE/DarkGiftTracker/build/HDT_DarkGiftTracker_Project/bin/Release/HDT_DarkGiftTracker.dll"
+          if (-not (Test-Path -LiteralPath $source)) { throw "HDT_DarkGiftTracker.dll was not generated." }
+          New-Item -ItemType Directory -Path "$env:GITHUB_WORKSPACE/artifact" -Force | Out-Null
+          Copy-Item -LiteralPath $source -Destination "$env:GITHUB_WORKSPACE/artifact/HDT_DarkGiftTracker.dll" -Force
+          Copy-Item -LiteralPath "$env:GITHUB_WORKSPACE/DarkGiftTracker/build/HDT_DarkGiftTracker_Project/README.txt" -Destination "$env:GITHUB_WORKSPACE/artifact/README.txt" -Force
+
+      - name: Upload DLL
+        uses: actions/upload-artifact@v4
+        with:
+          name: HDT_DarkGiftTracker
+          path: artifact/*
+          if-no-files-found: error
