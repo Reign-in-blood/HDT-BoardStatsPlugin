@@ -25,6 +25,35 @@ jobs:
           [System.IO.File]::WriteAllBytes($zipPath, [Convert]::FromBase64String($base64.Trim()))
           Expand-Archive -LiteralPath $zipPath -DestinationPath "$env:GITHUB_WORKSPACE/DarkGiftTracker/build" -Force
 
+      - name: Apply v0.6 source patch
+        shell: pwsh
+        run: |
+          $patchBase64 = Get-Content "DarkGiftTracker/v0.6.patch.gz.b64" -Raw
+          $compressedPath = Join-Path $env:RUNNER_TEMP "v0.6.patch.gz"
+          $patchPath = Join-Path $env:RUNNER_TEMP "v0.6.patch"
+          [System.IO.File]::WriteAllBytes($compressedPath, [Convert]::FromBase64String($patchBase64.Trim()))
+
+          $input = [System.IO.File]::OpenRead($compressedPath)
+          $output = [System.IO.File]::Create($patchPath)
+          try {
+            $gzip = New-Object System.IO.Compression.GZipStream($input, [System.IO.Compression.CompressionMode]::Decompress)
+            try { $gzip.CopyTo($output) }
+            finally { $gzip.Dispose() }
+          }
+          finally {
+            $output.Dispose()
+            $input.Dispose()
+          }
+
+          $projectDir = "$env:GITHUB_WORKSPACE/DarkGiftTracker/build/HDT_DarkGiftTracker_Project"
+          Push-Location $projectDir
+          try {
+            git apply --unsafe-paths -p4 $patchPath
+          }
+          finally {
+            Pop-Location
+          }
+
       - name: Download HDT 1.55.0 assemblies
         shell: pwsh
         run: |
